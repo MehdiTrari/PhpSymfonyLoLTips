@@ -5,10 +5,11 @@ namespace App\Entity;
 use App\Repository\ChampionsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ChampionsRepository::class)]
+#[UniqueEntity(fields: ['Nom'], message: 'Ce champion existe déjà dans notre base de données')]
 class Champions
 {
     #[ORM\Id]
@@ -18,7 +19,6 @@ class Champions
 
     #[ORM\Column(length: 30)]
     #[Assert\Length(min: 2, max: 30, minMessage: "Le nom du champion doit faire au moins 2 caractères", maxMessage: "Le nom du champion ne peut pas faire plus de 30 caractères")]
-    #[Assert\Unique(message: "Ce champion existe déjà dans notre base de données")]
     private ?string $Nom = null;
 
     #[ORM\Column(length: 1500, nullable: true)]

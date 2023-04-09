@@ -6,6 +6,26 @@
 
 <div class="container mt-4">
 <h1>Champions</h1>
+
+<a href="{{ path('champions_new')}}" class="btn btn-primary">Ajouter un champion</a>
+
+{% for message in app.flashes('danger') %}
+    <div class="alert-danger">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+{% for message in app.flashes('success') %}
+    <div class="alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}  
+
+
+<div class="count">
+    <p>Nombre de champions : {{ champions.totalItemCount }}</p>
+</div>
+
 <table class="table table-hover">
   <thead>
     <tr>
@@ -13,6 +33,8 @@
       <th scope="col">Nom</th>
       <th scope="col">Tips</th>
       <th scope="col">Type</th>
+      <th scope="col">Edition</th>
+      <th scope="col">Suppression</th>
     </tr>
   </thead>
     
@@ -24,15 +46,17 @@
       <td>{{champions.nom}}</td>
       <td>{{champions.tips}}</td>
       <td>{{champions.type}}</td>
+      <td> <a href="{{path('champions_edit', {id : champions.id}) }}" class="btn btn-warning"> Modifier </a></td>
+      <td><a href="{{path('champions_delete', {id : champions.id}) }}" class="btn btn-danger"> Supprimer </a></td>
     </tr>   
   </tbody>
     {% endfor %}
-</div>
-
-
-  
+</div>  
 </table>
 
+<div class="navigation d-flex justify-content-center">
+    {{ knp_pagination_render(champions) }}
+</div>
 
 
 {% endblock %}
