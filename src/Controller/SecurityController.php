@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Entity\User;
+use App\Form\RegistrationType;
 
 class SecurityController extends AbstractController
 {
@@ -29,11 +31,14 @@ class SecurityController extends AbstractController
         //rien à écrire ici car c'est Symfony qui gère la déconnexion
     }
 
-    //#[Route('/inscription', name: 'security.register', methods: ['GET', 'POST'])]
-    //public function register(): Response
-    //{
-    //    return $this->render('Pages/security/register.html.twig', [
-     //       'controller_name' => 'SecurityController',
-       // ]);
-    //}
+    #[Route('/inscription', name: 'security.registration', methods: ['GET', 'POST'])]
+    public function registration(): Response
+    {
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+
+        return $this->render('Pages/security/registration.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }

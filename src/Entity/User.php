@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column('password')]
     #[Assert\NotBlank(message: "Le mot de passe ne peut pas être vide")]
 
-    private ?string $password = null;
+    private ?string $password = 'password';
 
 
 
