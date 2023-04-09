@@ -4,20 +4,28 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use Faker\Generator;
+use App\Entity\User;
 use App\Entity\Champions;
 use App\Entity\Utilisateurs;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 {
     private Generator $faker;
 
+
+    
+
     public function __construct()
     {
         $this->faker = Factory::create('fr_FR');
+      
     }
 
+    
 
     public function load(ObjectManager $manager): void
     {
@@ -682,11 +690,26 @@ class AppFixtures extends Fixture
         $champions126->setNom('Zyra')
             ->setTips('Zyra est un champion très puissant en early game, il est donc important de bien le gérer. Il est conseillé de le gank en early game pour le mettre en difficulté. Il est également conseillé de le gank en mid game pour le mettre en difficulté. Il est également conseillé de le gank en late game pour le mettre en difficulté.')
             ->setType('Mage');
-
+        // Champions
         for ($i = 1; $i <= 126; $i++) {
             $manager->persist(${'champions' . $i});
         }
 
+        
+        
+        // Users
+        for ($i = 1; $i <= 10; $i++) {
+            $user = new User();
+            $user->setNom('user' . $i)
+                ->setEmail('user' . $i . '@gmail.com')
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+            $manager->persist($user);
+        
+
+        
+
         $manager->flush();
     }
+}
 }
